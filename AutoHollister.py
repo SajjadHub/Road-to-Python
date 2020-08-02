@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from selenium import webdriver
 import requests
 import json
 
@@ -15,12 +16,30 @@ data = {
         "pwd": "2907981733"
         }
 
-# payload = {'data': json.dumps(data)}
+options = webdriver.ChromeOptions()
+options.add_argument('--ignore-certificate-errors')
+options.add_argument('--incognito')
+# options.add_argument('--headless')
+driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver",
+                          chrome_options=options)
+
+# Startup the Hollister page and login
+driver.get(URL)
+driver.find_element_by_id("userid").send_keys("02315004")
+driver.find_element_by_id("pwd").send_keys("2907981733")
+driver.find_element_by_class_name("ps-button").click()
+
+# Go to schedule
+driver.find_element_by_id("win0groupletPTNUI_LAND_REC_GROUPLET$5").click()
+
+
+"""
 with requests.Session() as session:
     post = session.post(URL, data=data)
     page = session.get(schedule)
     # print(page.text)
     soup = BeautifulSoup(page.text, 'html.parser')
-    rows = soup.find_all('tr')
+    rows = soup.find_all('table')
     for row in rows:
         print(row.get_text())
+        """
