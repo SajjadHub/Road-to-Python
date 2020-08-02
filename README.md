@@ -1,2 +1,2 @@
 # Road-to-Python
-My journey to learning data structures and algorithms in python
+My journey learning and experimenting with various python libraries.
